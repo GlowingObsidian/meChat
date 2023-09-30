@@ -14,7 +14,7 @@ export function PublicRoute({ children, ...routeProps }) {
   }
 
   if (profile && !isLoading) {
-    return <Redirect to="/signin" />;
+    return <Redirect to="/" />;
   }
 
   return <Route {...routeProps}>{children}</Route>;
