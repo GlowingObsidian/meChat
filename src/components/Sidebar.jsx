@@ -1,3 +1,4 @@
+import CreateRoomBtnModal from '../dashboard/CreateRoomBtnModal';
 import { DashboardToggle } from '../dashboard/DashboardToggle';
 
 export function Sidebar() {
@@ -5,6 +6,7 @@ export function Sidebar() {
     <div className="h-100 pt-2">
       <div>
         <DashboardToggle />
+        <CreateRoomBtnModal />
       </div>
       bottom
     </div>
