@@ -61,8 +61,7 @@ export default function CreateRoomBtnModal() {
   return (
     <div className="mt-1">
       <Button block color="green" onClick={open}>
-        <Icon icon="creative" />
-        Create new chat room
+        <Icon icon="creative" /> Create new chat room
       </Button>
       <Modal show={isOpen} onHide={close}>
         <Modal.Header>
