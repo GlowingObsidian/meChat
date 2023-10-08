@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { database } from '../../../misc/firebase';
 import { transformToArrWithId } from '../../../misc/helpers';
 import MessageItem from './MessageItem';
+import { Alert } from 'rsuite';
 
 export default function Messages() {
   const { chatId } = useParams();
@@ -27,11 +28,38 @@ export default function Messages() {
     };
   }, [chatId]);
 
+  const handleAdmin = useCallback(
+    async uid => {
+      const adminsRef = database.ref(`/rooms/${chatId}/admins`);
+
+      let alertMsg;
+
+      await adminsRef.transaction(admins => {
+        if (admins) {
+          if (admins[uid]) {
+            admins[uid] = null;
+            alertMsg = `Removed from admin`;
+          } else {
+            admins[uid] = true;
+            alertMsg = `Made an admin`;
+          }
+        }
+
+        return admins;
+      });
+
+      Alert.info(alertMsg, 4000);
+    },
+    [chatId]
+  );
+
   return (
     <ul className="msg-list custom-scroll">
       {isChatEmpty && <li>No messages yet</li>}
       {canShowMessages &&
-        messages.map(msg => <MessageItem key={msg.id} message={msg} />)}
+        messages.map(msg => (
+          <MessageItem key={msg.id} message={msg} handleAdmin={handleAdmin} />
+        ))}
     </ul>
   );
 }
