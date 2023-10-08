@@ -25,7 +25,7 @@ export default function AttachmentBtnModal({ afterUpload }) {
 
     try {
       const uploadPromises = fileList.map(f => {
-        storage
+        return storage
           .ref(`/chat/${chatId}`)
           .child(Date.now() + f.name)
           .put(f.blobFile, {
@@ -39,7 +39,7 @@ export default function AttachmentBtnModal({ afterUpload }) {
         return {
           contentType: snap.metadata.contentType,
           name: snap.metadata.name,
-          url: await snap.ref.getDownloadUrl(),
+          url: await snap.ref.getDownloadURL(),
         };
       });
 
