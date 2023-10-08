@@ -1,4 +1,4 @@
-import { Alert, Button, Drawer } from 'rsuite';
+import { Alert, Button, Drawer, Icon } from 'rsuite';
 import { useMediaQuery, useModalState } from '../../../misc/custom-hook';
 import { EditableInput } from '../../EditableInput';
 import { useCurrentRoom } from '../../../context/current-room.context';
@@ -40,7 +40,7 @@ function EditRoomBtnDrawer() {
   return (
     <>
       <Button className="br-circle" size="sm" color="red" onClick={open}>
-        A
+        <Icon icon="gear" />
       </Button>
       <Drawer full={isMobile} show={isOpen} onHide={close} placement="right">
         <Drawer.Header>

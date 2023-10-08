@@ -9,7 +9,7 @@ import { auth } from '../../../misc/firebase';
 import { useHover, useMediaQuery } from '@uidotdev/usehooks';
 import IconBtnControl from './IconBtnControl';
 
-function MessageItem({ message, handleAdmin, handleLike }) {
+function MessageItem({ message, handleAdmin, handleLike, handleDelete }) {
   const { author, createdAt, text, likes, likeCount } = message;
 
   const [selfRef, isHovered] = useHover();
@@ -64,6 +64,14 @@ function MessageItem({ message, handleAdmin, handleLike }) {
           onClick={() => handleLike(message.id)}
           badgeContent={likeCount}
         />
+        {isAuthor && (
+          <IconBtnControl
+            isVisible={canShowIcons}
+            iconName="trash"
+            tooltip="Delete the message"
+            onClick={() => handleDelete(message.id)}
+          />
+        )}
       </div>
       <>
         <span className="word-break-all">{text}</span>
