@@ -7,6 +7,7 @@ export function EditableInput({
   label = null,
   placeholder = 'Write your value',
   emptyMsg = 'Input is empty',
+  wrapperClassName = '',
   ...inputProps
 }) {
   const [input, setInput] = useState(initialValue);
@@ -35,7 +36,7 @@ export function EditableInput({
   };
 
   return (
-    <>
+    <div className={wrapperClassName}>
       {label}
       <InputGroup>
         <Input
@@ -52,6 +53,6 @@ export function EditableInput({
           <Icon icon={'check'} />
         </InputGroup.Button>
       </InputGroup>
-    </>
+    </div>
   );
 }
