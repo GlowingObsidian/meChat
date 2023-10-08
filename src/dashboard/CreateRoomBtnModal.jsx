@@ -11,8 +11,8 @@ import {
 } from 'rsuite';
 import { useModalState } from '../misc/custom-hook';
 import { useState, useCallback, useRef } from 'react';
-import firebase from 'firebase';
-import { database } from '../misc/firebase';
+import firebase from 'firebase/app';
+import { auth, database } from '../misc/firebase';
 
 const { StringType } = Schema.Types;
 
@@ -42,10 +42,15 @@ export default function CreateRoomBtnModal() {
       return;
     }
     setIsLoading(true);
+
     const newRoomData = {
       ...formValue,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
+      admins: {
+        [auth.currentUser.uid]: true,
+      },
     };
+
     try {
       await database.ref('rooms').push(newRoomData);
       Alert.info(`${formValue.name} has been created`, 4000);

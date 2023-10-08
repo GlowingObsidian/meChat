@@ -5,6 +5,8 @@ import ChatTop from '../../components/chat-window/top';
 import { useRooms } from '../../context/rooms.context';
 import { Loader } from 'rsuite';
 import { CurrentRoomProvider } from '../../context/current-room.context';
+import { transformToArr } from '../../misc/helpers';
+import { auth } from '../../misc/firebase';
 
 export default function Chat() {
   const { chatId } = useParams();
@@ -22,7 +24,15 @@ export default function Chat() {
 
   const { name, description } = currentRoom;
 
-  const currentRoomData = { name, description };
+  const admins = transformToArr(currentRoom.admins);
+  const isAdmin = admins.includes(auth.currentUser.uid);
+
+  const currentRoomData = {
+    name,
+    description,
+    admins,
+    isAdmin,
+  };
 
   return (
     <CurrentRoomProvider data={currentRoomData}>
